@@ -171,7 +171,7 @@ function resetBtn(btn) {
 // ================================================================
 function saveSubmitTime(name) {
   try {
-    const t = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true });
+    const t = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Africa/Cairo' });
     localStorage.setItem('fattar_time_' + name, t);
   } catch(e) {}
 }

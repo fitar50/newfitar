@@ -1,8 +1,8 @@
 // js/api.js
 
-async function api(action, params = {}) {
+async function api(action, params = {}, timeoutMs = 15000) {
   const controller = new AbortController();
-  const timeoutId  = setTimeout(() => controller.abort(), 15000);
+  const timeoutId  = setTimeout(() => controller.abort(), timeoutMs);
   try {
     const res = await fetch(RAILWAY_URL + '/api', {
       method:  'POST',
@@ -23,7 +23,9 @@ async function api(action, params = {}) {
 
 async function initLoad() {
   try {
-    const r = await api('getAll');
+    // Railway free tier sleeps; the first request of the day cold-starts the
+    // server and can take much longer than a warm call, so give getAll room.
+    const r = await api('getAll', {}, 30000);
 
     S.menu              = r.menu              || {};
     S.names             = r.names             || [];

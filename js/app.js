@@ -214,7 +214,11 @@ async function _processStatus(r) {
   S.orderingOpen = r.orderingOpen === true;
 
   // ── Delivery fee ──────────────────────────────────────────────
-  if (typeof r.deliveryFee === 'number') S.deliveryFee = r.deliveryFee;
+  var _moneyChanged = false;
+  if (typeof r.deliveryFee === 'number' && r.deliveryFee !== S.deliveryFee) {
+    S.deliveryFee = r.deliveryFee;
+    _moneyChanged = true;
+  }
 
   // ── Note suggestions ──────────────────────────────────────────
   if (r.noteSuggestions) {
@@ -227,22 +231,29 @@ async function _processStatus(r) {
 
   // ── Order count ───────────────────────────────────────────────
   if (typeof r.ordersCount === 'number') {
-    var countChanged = r.ordersCount !== S._serverOrdersCount;
+    if (r.ordersCount !== S._serverOrdersCount) _moneyChanged = true;
     S._serverOrdersCount = r.ordersCount;
 
-    if (countChanged) {
+    // A count change shifts everyone's delivery split, so pull fresh orders
+    // before re-rendering any money.
+    if (_moneyChanged) {
       try {
         var fresh2 = await api('getOrders');
-        if (fresh2 && fresh2.data) {
-          S.orders = fresh2.data;
-          if (screenId === 'screen-name') renderNameScreen();
-          if (screenId === 'screen-closed' && S.currentName) {
-            var mine = S.orders.find(function(o) { return normAr(o.name) === normAr(S.currentName); });
-            if (mine) renderClosedOrder(S.currentName, mine.items);
-            else      renderClosedScreen(null);
-          }
-        }
+        if (fresh2 && fresh2.data) S.orders = fresh2.data;
       } catch (e2) {}
+    }
+  }
+
+  // Re-render whatever money the user is looking at, with the fresh split. The
+  // submitted screen used to freeze its delivery estimate here; now it tracks
+  // live like the name and closed screens.
+  if (_moneyChanged) {
+    if (screenId === 'screen-name') renderNameScreen();
+    else if (screenId === 'screen-submitted') renderSubmittedScreen();
+    else if (screenId === 'screen-closed' && S.currentName) {
+      var mine = S.orders.find(function(o) { return normAr(o.name) === normAr(S.currentName); });
+      if (mine) renderClosedOrder(S.currentName, mine.items);
+      else      renderClosedScreen(null);
     }
   }
 
@@ -265,7 +276,15 @@ async function _processStatus(r) {
 /* ---------- INIT ---------- */
 async function init() {
   showScreen('screen-loading');
-  const failsafe = setTimeout(() => renderErrorScreen(), 20000);
+  // Failsafe must outlast the getAll timeout (30s) so a real load error shows
+  // its own path, not this backstop, mid-flight.
+  const failsafe = setTimeout(() => renderErrorScreen(), 35000);
+  // Reassure the user during a Railway cold start instead of a silent spinner.
+  const wakeMsg = setTimeout(() => {
+    const p = document.querySelector('#screen-loading p');
+    if (p) p.textContent = 'السيرفر بيصحّى... ثانية واحدة';
+  }, 6000);
+  const clearInit = () => { clearTimeout(failsafe); clearTimeout(wakeMsg); };
 
   try {
     const params         = new URLSearchParams(window.location.search);
@@ -273,7 +292,7 @@ async function init() {
     const isSuperMgrMode = params.has(SUPER_MGR_PARAM);
 
     const ok = await initLoad();
-    clearTimeout(failsafe);
+    clearInit();
 
     if (!ok) { renderErrorScreen(); return; }
 
@@ -343,7 +362,7 @@ async function init() {
       renderNameScreen();
     }
   } catch (err) {
-    clearTimeout(failsafe);
+    clearInit();
     renderErrorScreen();
   }
 }

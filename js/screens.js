@@ -211,13 +211,13 @@ function renderSubmittedScreen() {
   const order     = S.orders.find(o => normAr(o.name) === normAr(S.currentName));
   const items     = order ? order.items : [];
   const foodTotal = items.reduce((s, i) => s + i.price * i.qty, 0);
-  const people    = Math.max(
-    S._serverOrdersCount !== null ? S._serverOrdersCount : S.orders.length,
-    S.orders.length,
-    1
-  );
-  const delShare = S.deliveryFee / people;
-  const bd       = personBreakdown(foodTotal, delShare);
+  // Use the SAME exact per-person split as the closed screen and the manager,
+  // so this total matches — to the piaster and the rounded pound — what the
+  // user sees after lock. deliverySplit is index-aligned to S.orders.
+  const people    = S.orders.length || 1;
+  const idx       = S.orders.findIndex(o => normAr(o.name) === normAr(S.currentName));
+  const delShare  = deliverySplit(S.deliveryFee, people)[idx >= 0 ? idx : 0];
+  const bd        = personBreakdown(foodTotal, delShare);
 
   document.getElementById('subList').innerHTML = items.map(i =>
     '<div class="sub-item"><span><span class="qty-tag">×' + i.qty + '</span>' + h(i.name) +

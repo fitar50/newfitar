@@ -28,7 +28,7 @@ async function refreshManagerDashboard() {
     S.restaurants        = restR.data || [];
     renderManagerDashboard();
     document.getElementById('lastUpdated').textContent =
-      'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+      'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit', timeZone: 'Africa/Cairo' });
   } catch (e) {
     showToast('فشل التحديث');
   }

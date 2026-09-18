@@ -3,7 +3,7 @@
 // BUMP CACHE_NAME ON EVERY DEPLOY, and bump the matching ?v= strings in
 // index.html at the same time. Those two are the entire defence against the
 // original bug where a stale build stayed pinned in people's browsers.
-const CACHE_NAME = 'fitar-v11';
+const CACHE_NAME = 'fitar-v13';
 
 self.addEventListener('install', e => {
   // Take over immediately instead of waiting for every old tab to close.
@@ -74,8 +74,10 @@ self.addEventListener('fetch', e => {
         }
         return res;
       })
-      .catch(() => caches.match(req).then(cached =>
-        cached || caches.match('./index.html') || Response.error()
-      ))
+      .catch(() =>
+        caches.match(req, { ignoreSearch: true })
+          .then(cached => cached || caches.match('./index.html', { ignoreSearch: true }))
+          .then(res => res || Response.error())
+      )
   );
 });
