@@ -561,3 +561,12 @@
 
 /* Allow long toast messages to wrap instead of clipping */
 #toast { white-space: normal; text-align: center; }
+
+/* v10 — Home + manager links side by side on the closed screen */
+.closed-nav-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+}

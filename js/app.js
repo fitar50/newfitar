@@ -383,6 +383,8 @@ document.addEventListener('click', e => {
       renderNameScreen();
       break;
 
+    case 'goHome': goHome(); break;
+
     // Order screen
     case 'qty': {
       const id = parseInt(el.dataset.id, 10); const delta = parseInt(el.dataset.delta, 10);
@@ -940,6 +942,30 @@ function lookupClosedOrder() {
 }
 
 /* ---------- REMEMBERED USER (localStorage) ---------- */
+// "Home" — return to the correct landing view for the CURRENT board state and
+// clear the remembered user + any in-progress selection, so someone can hand
+// their phone to a friend to look themselves up. It routes by state exactly like
+// init() does after load, so it NEVER opens the ordering screen while ordering
+// is closed: locked -> the closed screen's view-only lookup (see order + total,
+// no adding); not yet open -> the not-open screen; open -> the name screen.
+function goHome() {
+  S.currentName    = null;
+  S.currentQty     = {};
+  S.currentNotes   = {};
+  S.currentNoteQty = {};
+  S.isDirty        = false;
+  S.orderedBy      = null;
+  _clearRememberedUser();
+
+  if (S.isLocked) {
+    renderClosedScreen(null);
+  } else if (!S.orderingOpen) {
+    renderNotOpenScreen();
+  } else {
+    renderNameScreen();
+  }
+}
+
 // Lightweight "who uses this browser" — no auth, no password. Only the name
 // string is stored; the actual order always comes from the server.
 function _saveRememberedUser(name) {
