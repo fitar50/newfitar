@@ -300,6 +300,8 @@ function renderClosedScreen(selectedName) {
 
   document.getElementById('closedHasOrder').style.display = 'none';
   document.getElementById('closedNoOrder').style.display  = 'block';
+  var _ll = document.getElementById('closedLogoutLink');
+  if (_ll) _ll.style.display = 'none';   // lookup view is already "home" — no logout here
   showScreen('screen-closed');
 }
 
@@ -335,6 +337,8 @@ function renderClosedOrder(name, items) {
 
   document.getElementById('closedHasOrder').style.display = 'block';
   document.getElementById('closedNoOrder').style.display  = 'none';
+  var _ll = document.getElementById('closedLogoutLink');
+  if (_ll) _ll.style.display = '';        // show logout while an order is on screen
   showScreen('screen-closed');
 }
 
