@@ -568,6 +568,15 @@
   -webkit-tap-highlight-color: transparent;
   transition: background 0.15s, color 0.15s;
 }
+
+/* Tappable controls should click, never select text — prevents the mobile
+   text-selection / Google Translate popup on links and buttons. Plain content
+   (totals, names, InstaPay number) has no data-action, so it stays selectable. */
+[data-action] {
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
 .footer-link:active { background: rgba(0,0,0,0.06); }
 .footer-link:hover  { color: var(--dark); }
 .footer-link-danger { color: var(--red); }
