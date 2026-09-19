@@ -11,8 +11,8 @@
 <!-- ?v= MUST be bumped on every deploy, together with CACHE_NAME in sw.js.
      Without it GitHub Pages' HTTP caching pins these files in the browser and
      users keep running old code for days. That was the original bug. -->
-<link rel="stylesheet" href="css/style.css?v=16">
-<link rel="stylesheet" href="css/additions.css?v=16">
+<link rel="stylesheet" href="css/style.css?v=17">
+<link rel="stylesheet" href="css/additions.css?v=17">
 </head>
 <body>
 <div id="app">
@@ -192,12 +192,16 @@
     <div class="login-icon">👨‍💼</div>
     <p class="login-title">دخول المدير</p>
     <p class="login-sub">ادخل كود التحقق الخاص بيك</p>
-    <div class="form-group">
+  </div>
+  <div class="card">
+    <div class="name-body">
       <label class="field-label">كود التحقق</label>
       <input type="password" id="mgrCodeInput" placeholder="• • • • • •">
+      <button class="btn btn-primary" data-action="doManagerLogin" style="margin-top:12px;">دخول</button>
     </div>
-    <button class="btn btn-primary" data-action="doManagerLogin">دخول</button>
-    <a class="back-link" data-action="exitManager">← رجوع لصفحة الطلب</a>
+  </div>
+  <div class="app-footer">
+    <a class="footer-link" data-action="exitManager">↩ رجوع لصفحة الطلب</a>
   </div>
 </div>
 
@@ -262,12 +266,16 @@
     <div class="login-icon">🔧</div>
     <p class="login-title">دخول السوبر مدير</p>
     <p class="login-sub">لإدارة المطاعم والقوائم والأسعار</p>
-    <div class="form-group">
+  </div>
+  <div class="card">
+    <div class="name-body">
       <label class="field-label">كود السوبر مدير</label>
       <input type="password" id="superMgrCodeInput" placeholder="• • • • • •">
+      <button class="btn btn-primary" data-action="doSuperMgrLogin" style="margin-top:12px;">دخول</button>
     </div>
-    <button class="btn btn-primary" data-action="doSuperMgrLogin">دخول</button>
-    <a class="back-link" data-action="exitSuperMgr">← رجوع</a>
+  </div>
+  <div class="app-footer">
+    <a class="footer-link" data-action="exitSuperMgr">↩ رجوع</a>
   </div>
 </div>
 
@@ -312,13 +320,13 @@
 
 </div><!-- #app -->
 
-<script src="js/config.js?v=16"></script>
-<script src="js/utils.js?v=16"></script>
-<script src="js/api.js?v=16"></script>
-<script src="js/screens.js?v=16"></script>
-<script src="js/manager.js?v=16"></script>
-<script src="js/supermanager.js?v=16"></script>
-<script src="js/app.js?v=16"></script>
+<script src="js/config.js?v=17"></script>
+<script src="js/utils.js?v=17"></script>
+<script src="js/api.js?v=17"></script>
+<script src="js/screens.js?v=17"></script>
+<script src="js/manager.js?v=17"></script>
+<script src="js/supermanager.js?v=17"></script>
+<script src="js/app.js?v=17"></script>
 
 <script>
 // Service worker registration.
