@@ -11,8 +11,8 @@
 <!-- ?v= MUST be bumped on every deploy, together with CACHE_NAME in sw.js.
      Without it GitHub Pages' HTTP caching pins these files in the browser and
      users keep running old code for days. That was the original bug. -->
-<link rel="stylesheet" href="css/style.css?v=13">
-<link rel="stylesheet" href="css/additions.css?v=13">
+<link rel="stylesheet" href="css/style.css?v=14">
+<link rel="stylesheet" href="css/additions.css?v=14">
 </head>
 <body>
 <div id="app">
@@ -44,7 +44,9 @@
     <h2 class="not-open-title">الطلبات ما اتفتحتش لسه</h2>
     <p class="not-open-sub">لما المدير يفتح الطلبات<br>هتقدر تختار اللي تطلبه 🥙</p>
   </div>
-  <a class="back-link mgr-entry-link" data-action="showMgrLogin">🔑 دخول المدير</a>
+  <div class="app-footer">
+    <a class="footer-link" data-action="showMgrLogin">🔑 دخول المدير</a>
+  </div>
 </div>
 
 <!-- ======================== NAME SCREEN ======================== -->
@@ -72,7 +74,9 @@
       <button class="btn btn-primary" data-action="proceedWithName" style="margin-top:12px;">متابعة ←</button>
     </div>
   </div>
-  <a class="back-link mgr-entry-link" data-action="showMgrLogin">🔑 دخول المدير</a>
+  <div class="app-footer">
+    <a class="footer-link" data-action="showMgrLogin">🔑 دخول المدير</a>
+  </div>
 </div>
 
 <!-- ======================== ORDER SCREEN ======================== -->
@@ -112,13 +116,14 @@
   <div class="sub-items-card" id="subList"></div>
   <div id="subTotalBox"></div>
   <div id="subPaymentBox"></div>
-  <div class="sub-actions">
-    <button class="btn btn-outline sub-act-btn" data-action="editMyOrder">✏️ تعديل</button>
-    <button class="btn btn-outline sub-act-btn" data-action="orderForAnother">➕ اطلب لحد تاني</button>
+  <div class="screen-actions">
+    <button class="btn btn-outline screen-act-btn" data-action="editMyOrder">✏️ تعديل</button>
+    <button class="btn btn-outline screen-act-btn" data-action="orderForAnother">➕ اطلب لحد تاني</button>
   </div>
-  <div class="sub-bottom-row">
-    <a class="sub-link" data-action="cancelMyOrder" id="cancelOrderBtn">🚫 إلغاء طلبي</a>
-    <a class="sub-link" data-action="goBackToName">🚪 تسجيل الخروج</a>
+  <div class="app-footer">
+    <a class="footer-link footer-link-danger" data-action="cancelMyOrder" id="cancelOrderBtn">🚫 إلغاء طلبي</a>
+    <a class="footer-link" data-action="goBackToName">🚪 تسجيل الخروج</a>
+    <a class="footer-link" data-action="showMgrLogin">🔑 دخول المدير</a>
   </div>
 </div>
 
@@ -132,11 +137,14 @@
     <div style="padding:14px 16px 4px;" id="repeatList"></div>
   </div>
   <div id="repeatTotalBox"></div>
-  <div class="act-row" style="margin-top:12px;">
-    <button class="btn btn-primary" data-action="submitSameOrder">✅ ابعت نفس الطلب</button>
-    <button class="btn btn-outline" data-action="newOrderInstead">➕ اطلب من جديد</button>
+  <div class="screen-actions" style="margin-top:12px;">
+    <button class="btn btn-primary screen-act-btn" data-action="submitSameOrder">✅ ابعت نفس الطلب</button>
+    <button class="btn btn-outline screen-act-btn" data-action="newOrderInstead">➕ اطلب من جديد</button>
   </div>
-  <a class="back-link mgr-entry-link" data-action="goBackToName">🚪 تسجيل الخروج</a>
+  <div class="app-footer">
+    <a class="footer-link" data-action="goBackToName">🚪 تسجيل الخروج</a>
+    <a class="footer-link" data-action="showMgrLogin">🔑 دخول المدير</a>
+  </div>
 </div>
 <div id="screen-closed" class="screen">
   <div class="hdr"><h1>🥙 فطار الشغل</h1></div>
@@ -171,9 +179,9 @@
       </div>
     </div>
   </div>
-  <div class="closed-nav-links">
-    <a class="back-link mgr-entry-link" id="closedLogoutLink" data-action="goHome">🚪 تسجيل الخروج</a>
-    <a class="back-link mgr-entry-link" data-action="showMgrLogin">🔑 دخول المدير</a>
+  <div class="app-footer">
+    <a class="footer-link" id="closedLogoutLink" data-action="goHome">🚪 تسجيل الخروج</a>
+    <a class="footer-link" data-action="showMgrLogin">🔑 دخول المدير</a>
   </div>
 </div>
 
@@ -304,13 +312,13 @@
 
 </div><!-- #app -->
 
-<script src="js/config.js?v=13"></script>
-<script src="js/utils.js?v=13"></script>
-<script src="js/api.js?v=13"></script>
-<script src="js/screens.js?v=13"></script>
-<script src="js/manager.js?v=13"></script>
-<script src="js/supermanager.js?v=13"></script>
-<script src="js/app.js?v=13"></script>
+<script src="js/config.js?v=14"></script>
+<script src="js/utils.js?v=14"></script>
+<script src="js/api.js?v=14"></script>
+<script src="js/screens.js?v=14"></script>
+<script src="js/manager.js?v=14"></script>
+<script src="js/supermanager.js?v=14"></script>
+<script src="js/app.js?v=14"></script>
 
 <script>
 // Service worker registration.
