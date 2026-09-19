@@ -522,14 +522,16 @@ async function doToggleOrdering() {
     showToast('اختار مطعم الأول قبل ما تفتح الطلبات');
     return;
   }
-  // Soft warning, not a block: the collector can legitimately be decided after
-  // ordering opens. But without one, users see no payment box at all, which
-  // defeats the point of the app.
-  const noCollector = newState && !(S.paymentInfo && S.paymentInfo.collectorName);
+  // Hard block: ordering cannot open without a money collector chosen — the
+  // backend enforces this too, this is just the friendly message.
+  if (newState && !(S.paymentInfo && S.paymentInfo.collectorName)) {
+    showToast('اختار المسؤول عن تحصيل الفلوس الأول');
+    const sec = document.getElementById('payConfigCard') || document.getElementById('collectorSel');
+    if (sec && sec.scrollIntoView) sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
   const msg = newState
-    ? (noCollector
-        ? 'لسه محددتش المسؤول عن التحصيل — الناس مش هتعرف تدفع لمين. تفتح الطلبات برضه؟'
-        : 'هتفتح الطلبات للموظفين؟')
+    ? 'هتفتح الطلبات للموظفين؟'
     : 'هتقفل الطلبات مؤقتاً؟ الموظفين مش هيقدروا يطلبوا.';
   showConfirm(msg, async () => {
     try {
