@@ -47,7 +47,7 @@ body {
   color: #fff;
   padding: 18px 20px 14px;
   text-align: center;
-  position: sticky; top: 0; z-index: 50;
+  position: static;
 }
 .hdr h1 { font-size: 19px; font-weight: 800; letter-spacing: 0.2px; }
 .hdr p  { font-size: 12px; opacity: 0.85; margin-top: 3px; }
